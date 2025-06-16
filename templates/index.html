@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css">
+    <title>Predictor</title>
+</head>
+<body>
+
+    <video autoplay muted loop id="background-video">
+        <source src="/static/laptop.mp4" type="video/mp4">
+        
+    </video>
+
+    
+
+
+    <div class="wrapper">
+        <div class="title">
+            Laptop Price Predictor</div>
+
+        <form action="/" method="post">
+            <div class="form">
+
+            <div class="inputfield">
+
+                <label for="ram"> Ram (GB)</label>
+                <input type="text" class="input" name="ram" required>
+            </div>
+            <div class="inputfield">
+                <label for="weight"> Weight (Kg)</label>
+                <input class="input" type="text" name="weight" required>
+
+            </div>
+            
+            <div class="inputfield">
+                <lable class="company">Company</lable>
+                <div class="custom_select">
+                    <select name="company" id="company">
+                        <option value="" selected hidden>Select</option>
+                        <option value="acer">Acer</option>
+                        <option value="apple">Apple</option>
+                        <option value="asus">Asus</option>
+                        <option value="dell">Dell</option>
+                        <option value="hp">HP</option>
+                        <option value="lenovo">Lenovo</option>
+                        <option value="msi">MSI</option>
+                        <option value="toshiba">Toshiba</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+            </div>
+            <div class="inputfield">
+                <label for="typename">Type Name</label>
+                <div class="custom_select">
+                    <select name="typename" id="typename">
+                        <option value="" selected hidden>Select</option>
+                        <option value="2in1convertible">2 in 1 Convertible</option>
+                        <option value="gaming">Gaming</option>
+                        <option value="notbook">Net Book</option>
+                        <option value="notebook">Note Book</option>
+                        <option value="ultrabook">Ultra Book</option>
+                        <option value="workstation">Workstation</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="inputfield">
+                <label for="opsys">Opertion System</label>
+                <div class="custom_select">
+                    <select name="opsys" id="opsys">
+                        <option value="" selected hidden>Select</option>
+                        <option value="windows">Windows</option>
+                        <option value="mac">Mac Os</option>
+                        <option value="linux">Linux</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+            </div>
+            <div class="inputfield">
+                <label for="cpuname">CPU</label>
+                <div class="custom_select">
+                    <select name="cpuname" id="cpuname">
+                        <option value="" selected hidden>Select</option>
+                        <option value="intelcorei3">Intel Core i3</option>
+                        <option value="intelcorei5">Intel Core i5</option>
+                        <option value="intekcorei7">Intel Core i7</option>
+                        <option value="amd">AMD</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="inputfield">
+                <label for="gpuname">GPU</label>
+                <div class="custom_select">
+                    <select name="gpuname" id="gpuname">
+                        <option value="" selected hidden>Select</option>
+                        <option value="intel">Intel</option>
+                        <option value="amd">AMD</option>
+                        <option value="nvidia">Nvidia</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="check">
+                <div>
+                    <label for="touchscreen">Touch Screen</label>
+                    <input type="checkbox" name="touchscreen"> 
+                </div>
+                <div>
+                    <label for="ips">IPS Screen</label>
+                    <input type="checkbox" name="ips">
+                </div>
+            </div>
+
+            <div class="inputfield">
+                <input type="submit" class="btn" value="predict price">
+            </div>
+            </div>
+        </form>
+        <div class="result">
+            {% if pred_value != 0 %}
+            <p>Estimated Price : LKR {{pred_value}}</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const companySelect = document.getElementById("company");
+            const opsysSelect = document.getElementById("opsys");
+    
+            function updateOSOptions() {
+                const selectedCompany = companySelect.value;
+    
+                // Clear existing OS options
+                opsysSelect.innerHTML = "";
+    
+                if (selectedCompany === "apple") {
+                    // If Apple is selected, only show Mac OS
+                    const option = document.createElement("option");
+                    option.value = "mac";
+                    option.textContent = "Mac OS";
+                    opsysSelect.appendChild(option);
+                } else {
+                    // For any other brand, display all OS options except Mac OS
+                    const osOptions = [
+                        { value: "", text: "Select", hidden: true },
+                        { value: "windows", text: "Windows" },
+                        { value: "linux", text: "Linux" },
+                        { value: "other", text: "Other" }
+                    ];
+    
+                    osOptions.forEach(opt => {
+                        const option = document.createElement("option");
+                        option.value = opt.value;
+                        option.textContent = opt.text;
+                        if (opt.hidden) option.hidden = true;
+                        opsysSelect.appendChild(option);
+                    });
+                }
+            }
+    
+            // Run the function when the company selection changes
+            companySelect.addEventListener("change", updateOSOptions);
+        });
+    </script>
+    
+    </body>
+    </html>
+    
+
+</body>
+</html>
