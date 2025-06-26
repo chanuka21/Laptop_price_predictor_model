@@ -17,7 +17,7 @@ With a combination of data cleaning, feature engineering, and model tuning, this
 
 ## 🖼️ App Interface Preview
 
-![Laptop Price Predictor](dashboard1.png)
+![Laptop Price Predictor](picture.png)
 
 ## 📌 Technical Overview
 
